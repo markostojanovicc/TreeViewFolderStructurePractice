@@ -73,7 +73,9 @@
     <Compile Include="Directory\Data\DirectoryItemType.cs" />
     <Compile Include="Directory\DirectoryStructure.cs" />
     <Compile Include="Directory\ViewModels\BaseViewModel.cs" />
+    <Compile Include="Directory\ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="Directory\ViewModels\DirectoryItemViewModel.cs" />
+    <Compile Include="Directory\ViewModels\DirectoryStructureViewModel.cs" />
     <Compile Include="HeaderToImageConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -107,7 +109,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ReadMe.txt" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\drive.png" />
     <Resource Include="Images\file.png" />

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfTreeView.Directory.ViewModels;
 
 namespace WpfTreeView
 {
@@ -30,7 +31,7 @@ namespace WpfTreeView
         {
             InitializeComponent();
 
-            this.DataContext = new Class1();
+            this.DataContext = new DirectoryStructureViewModel();
         }
 
         #endregion

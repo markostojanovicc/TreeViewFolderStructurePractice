@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WpfTreeView.Directory.ViewModels;
+using WpfTreeView.Directory.ViewModels.Commands;
 using WpfTreeViews.Data;
 
 namespace WpfTreeView
@@ -15,6 +17,8 @@ namespace WpfTreeView
         /// The type of this item
         /// </summary>
         public DirectoryItemType Type { get; set; }
+
+        public string ImageName => Type == DirectoryItemType.Drive ? "drive" : (Type == DirectoryItemType.File ? "file" : (IsExpanded ? "folder-open" : "folder-closed"));
 
         /// <summary>
         /// The absolut path to this item
@@ -39,7 +43,7 @@ namespace WpfTreeView
         /// <summary>
         /// Indicates if the current iitem is expanded or not
         /// </summary>
-        public bool isExpanded
+        public bool IsExpanded
         {
             get
             {
@@ -54,6 +58,16 @@ namespace WpfTreeView
             }
         }
 
+        public DirectoryItemViewModel(string fullPath, DirectoryItemType type)
+        {
+            this.ExpandCommand = new RelayCommand(Expand);
+
+            this.FullPath = fullPath;
+            this.Type = type;
+
+            this.ClearChildren();
+        }
+
         private void ClearChildren()
         {
             this.Children = new ObservableCollection<DirectoryItemViewModel>();
@@ -63,12 +77,22 @@ namespace WpfTreeView
                 this.Children.Add(null);
         }
 
+        #region Commands
+
+        public ICommand ExpandCommand { get; set; }
+        #endregion
+
         /// <summary>
         /// Expands this direcotry and finds all children
         /// </summary>
         private void Expand()
         {
-            throw new NotImplementedException();
+            //we can not expand file
+            if (this.Type == DirectoryItemType.File)
+                return;
+
+            var children = DirectoryStructure.GetDirectoryContents(this.FullPath);
+            this.Children = new ObservableCollection<DirectoryItemViewModel>(children.Select(content => new DirectoryItemViewModel(content.FullPath, content.Type)));
         }
     }
 }
